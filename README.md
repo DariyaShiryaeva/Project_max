@@ -30,14 +30,14 @@ M(m(16, 8), 15)
 | m(m(8,7), M(56,39))|   7   | Сначала min(8,7)=7, затем max(56,39)=56, потом min(7, 56)=7 |
 
 ## Структура проекта
-📦 project-name  
+📦 Project_max  
 ├── 📂 src  
-│   ├── 📜 main.cpp          # Главный исходный файл  
-│   └── 📜 class.cpp         # Реализация класса  
+│   ├── 📜 main.cpp&nbsp;&nbsp;# Главный исходный файл  
+│   └── 📜 class.cpp&nbsp;&nbsp;# Реализация класса  
 ├── 📂 include  
-│   └── 📜 class.h           # Заголовочный файл   
-├── 📜 CMakeLists.txt        # Конфигурация CMake  
-└── 📜 README.md             # Документация  
+│   └── 📜 class.h&nbsp;&nbsp;# Заголовочный файл   
+├── 📜 CMakeLists.txt&nbsp;&nbsp;# Конфигурация CMake  
+└── 📜 README.md&nbsp;&nbsp;# Документация  
   
 
 

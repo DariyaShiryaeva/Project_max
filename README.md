@@ -32,12 +32,12 @@ M(m(16, 8), 15)
 ## Структура проекта
 .
 ├── include/
-|   └── class.h           # Заголовочный файл класса
+|   └── class.h
 ├── src/
-│   ├── main.cpp          # Главный файл программы
-│   └── class.cpp         # Реализация класса Unusual и шаблоны классов Stack и Node
-├── CMakeLists.txt        # Файл для сборки через CMake (опционально)
-└── README.md             # Этот файл
+│   ├── main.cpp
+│   └── class.cpp
+├── CMakeLists.txt
+└── README.md
 ---
 
 Выполнила:  

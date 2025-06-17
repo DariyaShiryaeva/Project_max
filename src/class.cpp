@@ -6,22 +6,16 @@
 #include <vector>
 #include <stdexcept>
 
-//функция записи выражения
-void Unusual::setExpression(std::string str) {
-    _expression = str;
-}
-
 //Проверка корректности ввода
-void Unusual::check() {
+std::string Check::check() {
     setlocale(LC_ALL, "ru");
-    std::string str;
     bool flag = false;
 
     // Очистка буфера ввода перед началом
     std::cin.clear();
-
+    std::string str;
     do {
-        std::cout << "\nВаше выражение: ";
+        std::cout << "\n   Ваше выражение: ";
         std::getline(std::cin, str); // Читаем всю строку
         std::cout << std::endl;
 
@@ -31,9 +25,9 @@ void Unusual::check() {
             if (str[i] != ' ')
                 ifempty = false;
         if (ifempty) {
-            std::cout << "В пустом выражении вычислять нечего. Попробуйте ввести выражение, содержащее операции -\n" <<
-                "поиск минимума(обозначается m(<число1>, <число2>)) и поиск максимума(обозначается М(<число1>, <число2>)).\n" <<
-                "Операции могут быть вложенными\n";
+            std::cout << "  В пустом выражении вычислять нечего. Попробуйте ввести выражение, содержащее операции -\n" <<
+                "   поиск минимума(обозначается m(<число1>, <число2>)) и поиск максимума(обозначается М(<число1>, <число2>)).\n" <<
+                "   Операции могут быть вложенными\n";
             continue;
         }
 
@@ -47,7 +41,7 @@ void Unusual::check() {
             }
         }
         if (invalid) {
-            std::cout << "Ошибка! Присутствуют посторонние символы. Пожалуйста, введите выражение заново.\n";
+            std::cout << "  Ошибка! Присутствуют посторонние символы. Пожалуйста, введите выражение заново.\n";
             continue;
         }
 
@@ -63,7 +57,7 @@ void Unusual::check() {
                 break;
         }
         if (balance != 0) {
-            std::cout << "Ошибка! Несбалансированы скобки. Пожалуйста, введите выражение заново.\n";
+            std::cout << "  Ошибка! Несбалансированы скобки. Пожалуйста, введите выражение заново.\n";
             continue;
         }
 
@@ -77,14 +71,14 @@ void Unusual::check() {
                 oper++;
         }
         if (oper * 2 != par) {
-            std::cout << "Ошибка! Количество скобок не соответствует количеству операций." <<
+            std::cout << "  Ошибка! Количество скобок не соответствует количеству операций." <<
                 " Пожалуйста, введите выражение заново.\n";
             continue;
         }
 
         // Проверка, что нет операции без аргументов
         if (str.find("()") != std::string::npos) {
-            std::cout << "Ошибка! Найдена операция без аргументов. Пожалуйста, введите выражение заново.\n";
+            std::cout << "  Ошибка! Найдена операция без аргументов. Пожалуйста, введите выражение заново.\n";
             continue;
         }
 
@@ -116,47 +110,46 @@ void Unusual::check() {
             }
         }
         if (!valid) {
-            std::cout << "Ошибка! Количество аргументов в операции должно равняться двум. "
-                << "Пожалуйста, введите выражение заново.\n";
+            std::cout << "  Ошибка! Количество аргументов в операции должно равняться двум. "
+                << "    Пожалуйста, введите выражение заново.\n";
             continue;
         }
-
         flag = true;
     } while (!flag);
-    setExpression(str);
+    return str;
 }
 
-int Unusual::calculate() {
+int Calculate::calculate(std::string str) {
     Stack<int> nums;
     Stack<char> ops;
     int i = 0;
-    size_t n = _expression.size();
+    size_t n = str.size();
 
     while (i < n) {
-        if (_expression[i] == ' ') {
+        if (str[i] == ' ') {
             i++;
             continue;
         }
-        if (std::isdigit(_expression[i])) {
+        if (std::isdigit(str[i])) {
             int j = i;
-            while (j < n && std::isdigit(_expression[j])) {
+            while (j < n && std::isdigit(str[j])) {
                 j++;
             }
-            int num = std::stoi(_expression.substr(i, j - i));
+            int num = std::stoi(str.substr(i, j - i));
             nums.push(num);
             i = j;
         }
-        else if (_expression[i] == 'm' || _expression[i] == 'M') {
-            ops.push(_expression[i]);
+        else if (str[i] == 'm' || str[i] == 'M') {
+            ops.push(str[i]);
             i++;
-            if (i < n && _expression[i] == '(') {
+            if (i < n && str[i] == '(') {
                 i++;
             }
         }
-        else if (_expression[i] == ',') {
+        else if (str[i] == ',') {
             i++;
         }
-        else if (_expression[i] == ')') {
+        else if (str[i] == ')') {
             int arg2 = nums.top(); nums.pop();
             int arg1 = nums.top(); nums.pop();
             char op = ops.top(); ops.pop();

@@ -3,68 +3,93 @@
 #include <stdexcept>
 #include <string>
 
-class Unusual {
-private:
-    std::string _expression;
+class Check {
 public:
-    void setExpression(std::string str);
-    void check();
-    int calculate();
+    static std::string check();
+};
+
+class Calculate {
+public:
+    static int calculate(std::string str);
 };
 
 // Узлы
 template <typename T>
 class Node {
+private:
+    T _Data;
+    Node<T>* _Next;
+
 public:
-    T Data;
-    Node<T>* Next;
-    Node(const T& val) : Data(val), Next(nullptr) {}
+    Node(const T& val) : _Data(val), _Next(nullptr) {}
+    void setData(const T& val) {
+        _Data = val;
+    }
+
+    T getData() const {
+        return _Data;
+    }
+
+    T& getDataRef() {
+        return _Data;
+    }
+
+    void setNext(Node<T>* next) {
+        _Next = next;
+    }
+
+    Node<T>* getNext() const {
+        return _Next;
+    }
 };
+
 
 // Шаблонный стек
 template <typename T>
 class Stack {
 private:
-    Node<T>* topNode;
+    Node<T>* _topNode;
 public:
-    Stack() : topNode(nullptr) {}
+    Stack() : _topNode(nullptr) {}
 
     //функция добавления в стек
     void push(const T& val) {
         Node<T>* newNode = new Node<T>(val);
-        newNode->Next = topNode;
-        topNode = newNode;
+        newNode->setNext(_topNode);
+        _topNode = newNode;
     }
 
     //функция удаления из стека
     void pop() {
-        Node<T>* temp = topNode;
-        topNode = topNode->Next;
-        delete temp;
+        if (_topNode) {
+            Node<T>* temp = _topNode;
+            _topNode = _topNode->getNext();
+            delete temp;
+        }
     }
 
     //возврат значения вершины
     T top() const {
-        return topNode->Data;
+        return _topNode->getData();
     }
 
     //возврат ссылки на вершину
     T& topRef() {
-        return topNode->Data;
+        return _topNode->getDataRef();
     }
 
     //проверка пустоты
     bool empty() const {
-        return topNode == nullptr;
+        return _topNode == nullptr;
     }
 
     //размер стека
     int size() const {
         int count = 0;
-        Node<T>* current = topNode;
+        Node<T>* current = _topNode;
         while (current) {
             count++;
-            current = current->Next;
+            current = current->getNext();
         }
         return count;
     }
